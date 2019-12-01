@@ -36,7 +36,8 @@
                 android:id="@+id/loginEmailInputId"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:singleLine="true"/>
+                android:singleLine="true"
+                android:text="jw@gmail.com"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
@@ -54,7 +55,8 @@
                 android:id="@+id/loginPasswordInputId"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:singleLine="true"/>
+                android:singleLine="true"
+                android:text="qwerty12345"/>
 
         </LinearLayout>
 
@@ -96,19 +98,6 @@
             android:layout_marginTop="5dp"
             />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="OR"
-            android:gravity="center"
-            android:textColor="@color/colorPrimary"/>
-
-        <com.google.android.gms.common.SignInButton
-            android:id="@+id/sign_in_button"
-            android:layout_width="300dp"
-            android:layout_height="55dp"
-            android:layout_marginTop="15dp"
-            />
 
 
 

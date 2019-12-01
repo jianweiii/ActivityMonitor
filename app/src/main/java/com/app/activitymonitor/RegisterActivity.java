@@ -17,10 +17,11 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    EditText emailInput,passwordInput;
+    EditText emailInput,passwordInput,usernameInput;
     Button registerButton,loginButton;
     FirebaseAuth firebaseAuth;
 
@@ -33,6 +34,7 @@ public class RegisterActivity extends AppCompatActivity {
         passwordInput = (EditText) findViewById(R.id.passwordInputId);
         registerButton = (Button) findViewById(R.id.registerButtonId);
         loginButton = (Button) findViewById(R.id.loginButtonId);
+        usernameInput = findViewById(R.id.usernameInputId);
 
         firebaseAuth = FirebaseAuth.getInstance();
 
@@ -53,11 +55,26 @@ public class RegisterActivity extends AppCompatActivity {
                 if(password.length()<6){
                     Toast.makeText(getApplicationContext(),"Password must be at least 6 characters",Toast.LENGTH_SHORT).show();
                 }
-                firebaseAuth.createUserWithEmailAndPassword(String.valueOf(email), String.valueOf(password))
+                firebaseAuth.createUserWithEmailAndPassword(email, password)
                         .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if(task.isSuccessful()){
+
+                                    // Setting user display name
+                                    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                                    UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder().setDisplayName(usernameInput.getText().toString()).build();
+
+                                    user.updateProfile(profileUpdates).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            if (task.isSuccessful()) {
+                                                Log.d("Register", "User profile updated.");
+                                            }
+                                        }
+                                    });
+
+                                    // Moving user to main activity
                                     startActivity(new Intent(getApplicationContext(),MainActivity.class));
                                     finish();
                                 }

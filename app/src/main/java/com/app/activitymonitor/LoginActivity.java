@@ -22,10 +22,7 @@ public class LoginActivity extends AppCompatActivity {
 
     EditText loginEmail,loginPassword;
     Button loginButton,registerButton,newPassButton;
-    private static final int RC_SIGN_IN = 9001;
-    private SignInButton signInButton;
     FirebaseAuth firebaseAuth;
-    GoogleApiClient mGoogleApiClient;
 
 
     @Override
@@ -37,7 +34,6 @@ public class LoginActivity extends AppCompatActivity {
         loginPassword = (EditText) findViewById(R.id.loginPasswordInputId);
         loginButton = (Button) findViewById(R.id.loginLoginButtonId);
         registerButton = (Button) findViewById(R.id.loginRegisterButtonId);
-        signInButton = (SignInButton) findViewById(R.id.sign_in_button);
         newPassButton = (Button) findViewById(R.id.forgotPassButton);
 
         firebaseAuth = FirebaseAuth.getInstance();
