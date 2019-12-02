@@ -10,14 +10,15 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class HistoryRecyclerAdapter extends RecyclerView.Adapter<HistoryRecyclerAdapter.MyViewHolder> {
 
-    private List<String> list;
+    private ArrayList<List<String>> activityList;
 
-    public HistoryRecyclerAdapter(List<String> list) {
-        this.list = list;
+    public HistoryRecyclerAdapter(ArrayList<List<String>> activityList) {
+        this.activityList = activityList;
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
@@ -36,15 +37,15 @@ public class HistoryRecyclerAdapter extends RecyclerView.Adapter<HistoryRecycler
         }
     }
 
-    public void add(int position, String item) {
-        list.add(position, item);
-        notifyItemInserted(position);
-    }
-
-    public void remove(int position) {
-        list.remove(position);
-        notifyItemRemoved(position);
-    }
+//    public void add(int position, String item) {
+//        list.add(position, item);
+//        notifyItemInserted(position);
+//    }
+//
+//    public void remove(int position) {
+//        list.remove(position);
+//        notifyItemRemoved(position);
+//    }
 
     @NonNull
     @Override
@@ -57,14 +58,14 @@ public class HistoryRecyclerAdapter extends RecyclerView.Adapter<HistoryRecycler
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        final String name = list.get(position);
-        holder.mTitle.setText(name);
-        holder.mDate.setText(name);
+        final List<String> details = activityList.get(position);
+        holder.mTitle.setText(details.get(0));
+        holder.mDate.setText(details.get(1));
     }
 
     @Override
     public int getItemCount() {
-        return list.size();
+        return activityList.size();
     }
 
 

@@ -21,6 +21,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
 
 public class AddActivity extends AppCompatActivity {
 
@@ -45,6 +47,8 @@ public class AddActivity extends AppCompatActivity {
 
         titleAddActivityEdit = findViewById(R.id.titleAddActivityEdit);
         dateAddActivityEdit = findViewById(R.id.dateAddActivityEdit);
+
+        final HashMap<String, HashMap<String, String>> hashMap = new HashMap<>();
 
         firebaseAuth = FirebaseAuth.getInstance();
 
@@ -78,7 +82,13 @@ public class AddActivity extends AppCompatActivity {
         addAddActivityButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FirebaseUser user =  firebaseAuth.getCurrentUser();
+
+                // Adding current activity details to hashMap
+                hashMap.put("Activity", new HashMap<String, String>());
+                hashMap.get("Activity").put("title", titleAddActivityEdit.getText().toString());
+                hashMap.get("Activity").put("date", dateAddActivityEdit.getText().toString());
+
+                final FirebaseUser user =  firebaseAuth.getCurrentUser();
                 final String userId = user.getUid();
                 final DatabaseReference mRef =  FirebaseDatabase.getInstance().getReference().child("Users");
                 mRef.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -86,7 +96,8 @@ public class AddActivity extends AppCompatActivity {
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         if (dataSnapshot.hasChild(userId)) {
                             System.out.println("SCREAMMMMM");
-                            mRef.child(userId).child("title").setValue(titleAddActivityEdit.getText().toString());
+                            mRef.child(userId).push().setValue(hashMap);
+//                            mRef.child(userId).child("title").setValue(titleAddActivityEdit.getText().toString());
                         } else {
                             System.out.println("CRYYYYYYY");
                             mRef.child(userId).child("date").setValue(dateAddActivityEdit.getText().toString());

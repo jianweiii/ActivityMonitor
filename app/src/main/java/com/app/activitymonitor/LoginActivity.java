@@ -11,8 +11,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.google.android.gms.common.SignInButton;
-import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -30,11 +28,11 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        loginEmail = (EditText) findViewById(R.id.loginEmailInputId);
-        loginPassword = (EditText) findViewById(R.id.loginPasswordInputId);
-        loginButton = (Button) findViewById(R.id.loginLoginButtonId);
-        registerButton = (Button) findViewById(R.id.loginRegisterButtonId);
-        newPassButton = (Button) findViewById(R.id.forgotPassButton);
+        loginEmail = findViewById(R.id.loginEmailInputId);
+        loginPassword = findViewById(R.id.loginPasswordInputId);
+        loginButton = findViewById(R.id.loginLoginButtonId);
+        registerButton = findViewById(R.id.loginRegisterButtonId);
+        newPassButton = findViewById(R.id.forgotPassButton);
 
         firebaseAuth = FirebaseAuth.getInstance();
 

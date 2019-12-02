@@ -12,6 +12,15 @@ import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -20,6 +29,8 @@ public class MainActivity extends AppCompatActivity {
 
     FirebaseAuth firebaseAuth;
     private FirebaseAuth.AuthStateListener  authStateListener;
+
+    ArrayList<List<String>> activityList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +69,9 @@ public class MainActivity extends AppCompatActivity {
         historyViewer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(),HistoryActivity.class));
+                Intent intent = new Intent(getApplicationContext(),HistoryActivity.class);
+                intent.putExtra("activityList", activityList);
+                startActivity(intent);
 
             }
         });
@@ -67,6 +80,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getApplicationContext(),AddActivity.class));
+
             }
         });
 
@@ -74,9 +88,53 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        Log.i("MAIN", "On resume called");
+        activityList.clear();
+    }
+
+    @Override
     protected void onStart() {
         super.onStart();
+
+        Log.i("MAIN", "On start called");
+
+
         firebaseAuth.addAuthStateListener(authStateListener);
+
+        final FirebaseUser user =  firebaseAuth.getCurrentUser();
+        final String userId = user.getUid();
+        final DatabaseReference mRef =  FirebaseDatabase.getInstance().getReference().child("Users").child(userId);
+
+
+        mRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                activityList.clear();
+
+                for(DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
+
+                    // Get the title of each activity
+                    String titleActivity = postSnapshot.child("Activity").child("title").getValue().toString();
+                    // Get the date of each activity
+                    String dateActivity = postSnapshot.child("Activity").child("date").getValue().toString();
+
+                    // Add activity to a list before adding it to array of list
+                    List<String> indvActivity = new ArrayList<>();
+                    indvActivity.add(titleActivity);
+                    indvActivity.add(dateActivity);
+                    activityList.add(indvActivity);
+
+                }
+                System.out.println(activityList);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 
     @Override

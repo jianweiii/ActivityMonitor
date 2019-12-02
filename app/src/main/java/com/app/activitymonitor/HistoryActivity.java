@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,11 +27,14 @@ public class HistoryActivity extends AppCompatActivity {
         layoutManager = new LinearLayoutManager(this);
         historyRecycler.setLayoutManager(layoutManager);
 
-        List<String> input = new ArrayList<>();
-        for (int i = 0; i < 100; i++) {
-            input.add("Test" + i);
-        }// define an adapter
-        historyAdaptor = new HistoryRecyclerAdapter(input);
+        ArrayList<List<String>> activityList = (ArrayList<List<String>>) getIntent().getSerializableExtra("activityList");
+        Log.i("HA", activityList.toString());
+
+//        List<String> input = new ArrayList<>();
+//        for (int i = 0; i < 100; i++) {
+//            input.add("Test" + i);
+//        }// define an adapter
+        historyAdaptor = new HistoryRecyclerAdapter(activityList);
         historyRecycler.setAdapter(historyAdaptor);
     }
 }
