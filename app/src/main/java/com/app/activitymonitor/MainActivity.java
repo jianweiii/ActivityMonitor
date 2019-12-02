@@ -15,7 +15,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Button logOutButton;
+    private Button logOutButton,historyViewer,addActivityButton;
     private TextView displayUsernameMain;
 
     FirebaseAuth firebaseAuth;
@@ -27,7 +27,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         logOutButton = findViewById(R.id.mainLogoutButtonId);
+        historyViewer = findViewById(R.id.historyViewer);
         displayUsernameMain = findViewById(R.id.displayUsernameMain);
+        addActivityButton = findViewById(R.id.addActivityButton);
 
         firebaseAuth = FirebaseAuth.getInstance();
 
@@ -52,6 +54,22 @@ public class MainActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+        historyViewer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(),HistoryActivity.class));
+
+            }
+        });
+
+        addActivityButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(),AddActivity.class));
+            }
+        });
+
 
     }
 
