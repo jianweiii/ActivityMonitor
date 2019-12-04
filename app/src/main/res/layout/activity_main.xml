@@ -10,37 +10,156 @@
 
     <TextView
         android:id="@+id/displayUsernameMain"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="20dp"
-        android:text="Welcome"
-        android:layout_gravity="center"/>
-
-    <CalendarView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:text="@string/welcome"
+        android:textAlignment="center"
+        android:layout_gravity="center"
+        android:padding="10dp"
+        android:background="@drawable/box_elevation"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center|bottom">
+        android:orientation="vertical"
+        android:layout_marginTop="20dp">
 
-        <Button
-            android:id="@+id/addActivityButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Add"/>
-        <Button
-            android:id="@+id/historyViewer"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="History"/>
-        <Button
-            android:id="@+id/mainLogoutButtonId"
-            android:text="Log out"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:orientation="horizontal"
+            android:layout_weight="0.1"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/box_outline_main">
+
+            <TextView
+                android:layout_width="70dp"
+                android:layout_height="72dp"
+                android:background="@drawable/ic_iconfinder_calendar_285670"
+                android:layout_marginStart="30dp"
+                android:layout_gravity="center"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/today"
+                android:textSize="25sp"
+                android:layout_marginTop="10dp"
+                android:layout_gravity="center"/>
+
+            <TextView
+                android:id="@+id/todayActivityLeft"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="4"
+                android:textSize="60sp"
+                android:layout_gravity="center"
+                android:gravity="end"
+                android:layout_marginEnd="20dp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:orientation="horizontal"
+            android:layout_weight="0.10"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/box_outline_main">
+
+            <TextView
+                android:layout_width="70dp"
+                android:layout_height="72dp"
+                android:background="@drawable/ic_iconfinder_resolutions_04_897245"
+                android:layout_marginStart="30dp"
+                android:layout_gravity="center"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/upcoming"
+                android:textSize="25sp"
+                android:layout_marginTop="10dp"
+                android:layout_gravity="center"/>
+
+            <TextView
+                android:id="@+id/scheduledActivityLeft"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="4"
+                android:textSize="60sp"
+                android:layout_gravity="center"
+                android:gravity="end"
+                android:layout_marginEnd="20dp"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/historyActivity"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:orientation="horizontal"
+            android:layout_weight="0.1"
+
+            android:background="@drawable/box_outline_main">
+
+            <TextView
+                android:layout_width="70dp"
+                android:layout_height="72dp"
+                android:background="@drawable/ic_iconfinder_recent_history_replay_repeat_5402415"
+                android:layout_marginStart="30dp"
+                android:layout_gravity="center"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/history"
+                android:textSize="25sp"
+                android:layout_marginTop="10dp"
+                android:layout_gravity="center"/>
+
+            <TextView
+                android:id="@+id/historyActivityLeft"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="4"
+                android:textSize="60sp"
+                android:layout_gravity="center"
+                android:gravity="end"
+                android:layout_marginEnd="20dp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.1"
+            android:gravity="center|bottom">
+
+            <Button
+                android:id="@+id/addActivityButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Add"/>
+            <Button
+                android:id="@+id/historyViewer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="History"/>
+            <Button
+                android:id="@+id/mainLogoutButtonId"
+                android:text="Log out"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
     </LinearLayout>
+
+
+
+
+
 
 
 

@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">ActivityMonitor</string>
+    <string name="welcome">Welcome</string>
+    <string name="upcoming">Upcoming</string>
+    <string name="today">Today</string>
+    <string name="history">History</string>
 </resources>

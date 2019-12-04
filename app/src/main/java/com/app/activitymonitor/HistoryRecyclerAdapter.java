@@ -3,7 +3,6 @@ package com.app.activitymonitor;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -25,6 +24,7 @@ public class HistoryRecyclerAdapter extends RecyclerView.Adapter<HistoryRecycler
 
         public TextView mTitle;
         public TextView mDate;
+        public TextView mTime;
         public View layout;
 
         public MyViewHolder(@NonNull View itemView) {
@@ -34,6 +34,7 @@ public class HistoryRecyclerAdapter extends RecyclerView.Adapter<HistoryRecycler
 
             mTitle = itemView.findViewById(R.id.titleHistory);
             mDate = itemView.findViewById(R.id.dateHistory);
+            mTime = itemView.findViewById(R.id.timeHistory);
         }
     }
 
@@ -61,6 +62,7 @@ public class HistoryRecyclerAdapter extends RecyclerView.Adapter<HistoryRecycler
         final List<String> details = activityList.get(position);
         holder.mTitle.setText(details.get(0));
         holder.mDate.setText(details.get(1));
+        holder.mTime.setText(details.get(2));
     }
 
     @Override

@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.TimePicker;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -31,8 +33,10 @@ public class AddActivity extends AppCompatActivity {
 
     private EditText titleAddActivityEdit;
     private EditText dateAddActivityEdit;
+    private EditText timeAddActivityEdit;
 
     private DatePickerDialog picker;
+    private TimePickerDialog timePickerDialog;
 
     FirebaseAuth firebaseAuth;
 
@@ -47,6 +51,7 @@ public class AddActivity extends AppCompatActivity {
 
         titleAddActivityEdit = findViewById(R.id.titleAddActivityEdit);
         dateAddActivityEdit = findViewById(R.id.dateAddActivityEdit);
+        timeAddActivityEdit = findViewById(R.id.timeAddActivityEdit);
 
         final HashMap<String, HashMap<String, String>> hashMap = new HashMap<>();
 
@@ -72,6 +77,29 @@ public class AddActivity extends AppCompatActivity {
             }
         });
 
+        timeAddActivityEdit.setInputType(InputType.TYPE_NULL);
+
+        timeAddActivityEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Get Current Time
+                final Calendar c = Calendar.getInstance();
+                int mHour = c.get(Calendar.HOUR_OF_DAY);
+                int mMinute = c.get(Calendar.MINUTE);
+
+                // Launch Time Picker Dialog
+                timePickerDialog = new TimePickerDialog(AddActivity.this,
+                        new TimePickerDialog.OnTimeSetListener() {
+                            @Override
+                            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                                timeAddActivityEdit.setText(hourOfDay + ":" + minute);
+                            }
+                        }, mHour, mMinute, false);
+                timePickerDialog.show();
+            }
+        });
+
+
         cancelAddActivityButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -87,6 +115,7 @@ public class AddActivity extends AppCompatActivity {
                 hashMap.put("Activity", new HashMap<String, String>());
                 hashMap.get("Activity").put("title", titleAddActivityEdit.getText().toString());
                 hashMap.get("Activity").put("date", dateAddActivityEdit.getText().toString());
+                hashMap.get("Activity").put("time", timeAddActivityEdit.getText().toString());
 
                 final FirebaseUser user =  firebaseAuth.getCurrentUser();
                 final String userId = user.getUid();
@@ -94,14 +123,7 @@ public class AddActivity extends AppCompatActivity {
                 mRef.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        if (dataSnapshot.hasChild(userId)) {
-                            System.out.println("SCREAMMMMM");
-                            mRef.child(userId).push().setValue(hashMap);
-//                            mRef.child(userId).child("title").setValue(titleAddActivityEdit.getText().toString());
-                        } else {
-                            System.out.println("CRYYYYYYY");
-                            mRef.child(userId).child("date").setValue(dateAddActivityEdit.getText().toString());
-                        }
+                        mRef.child(userId).push().setValue(hashMap);
                     }
 
                     @Override

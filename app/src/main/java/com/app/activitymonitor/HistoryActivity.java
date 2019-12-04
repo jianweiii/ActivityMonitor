@@ -30,10 +30,7 @@ public class HistoryActivity extends AppCompatActivity {
         ArrayList<List<String>> activityList = (ArrayList<List<String>>) getIntent().getSerializableExtra("activityList");
         Log.i("HA", activityList.toString());
 
-//        List<String> input = new ArrayList<>();
-//        for (int i = 0; i < 100; i++) {
-//            input.add("Test" + i);
-//        }// define an adapter
+
         historyAdaptor = new HistoryRecyclerAdapter(activityList);
         historyRecycler.setAdapter(historyAdaptor);
     }

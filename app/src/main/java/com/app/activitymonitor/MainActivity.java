@@ -8,7 +8,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -26,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
 
     private Button logOutButton,historyViewer,addActivityButton;
     private TextView displayUsernameMain;
+    private LinearLayout historyActivity;
 
     FirebaseAuth firebaseAuth;
     private FirebaseAuth.AuthStateListener  authStateListener;
@@ -41,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
         historyViewer = findViewById(R.id.historyViewer);
         displayUsernameMain = findViewById(R.id.displayUsernameMain);
         addActivityButton = findViewById(R.id.addActivityButton);
+        historyActivity = findViewById(R.id.historyActivity);
 
         firebaseAuth = FirebaseAuth.getInstance();
 
@@ -76,6 +80,15 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        historyActivity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(),HistoryActivity.class);
+                intent.putExtra("activityList", activityList);
+                startActivity(intent);
+            }
+        });
+
         addActivityButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -85,13 +98,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        Log.i("MAIN", "On resume called");
-        activityList.clear();
     }
 
     @Override
@@ -119,15 +125,19 @@ public class MainActivity extends AppCompatActivity {
                     String titleActivity = postSnapshot.child("Activity").child("title").getValue().toString();
                     // Get the date of each activity
                     String dateActivity = postSnapshot.child("Activity").child("date").getValue().toString();
+                    // Get the time of each activity
+                    String timeActivity = postSnapshot.child("Activity").child("time").getValue().toString();
 
                     // Add activity to a list before adding it to array of list
                     List<String> indvActivity = new ArrayList<>();
                     indvActivity.add(titleActivity);
                     indvActivity.add(dateActivity);
+                    indvActivity.add(timeActivity);
                     activityList.add(indvActivity);
 
                 }
                 System.out.println(activityList);
+//                Toast.makeText(getApplicationContext(), "History Loaded", Toast.LENGTH_LONG).show();
             }
 
             @Override

@@ -70,6 +70,15 @@
                 android:hint="Date"
                 android:paddingLeft="20dp"
                 android:paddingRight="20dp"/>
+
+            <EditText
+                android:id="@+id/timeAddActivityEdit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Time"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"/>
+
         </LinearLayout>
     </LinearLayout>
 
