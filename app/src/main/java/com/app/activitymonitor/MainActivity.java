@@ -20,8 +20,12 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.io.Serializable;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -109,14 +113,17 @@ public class MainActivity extends AppCompatActivity {
 
         firebaseAuth.addAuthStateListener(authStateListener);
 
+
         final FirebaseUser user =  firebaseAuth.getCurrentUser();
         final String userId = user.getUid();
         final DatabaseReference mRef =  FirebaseDatabase.getInstance().getReference().child("Users").child(userId);
 
 
+
         mRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                // Clear list when activity starts to prevent duplicates
                 activityList.clear();
 
                 for(DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
@@ -130,14 +137,30 @@ public class MainActivity extends AppCompatActivity {
 
                     // Add activity to a list before adding it to array of list
                     List<String> indvActivity = new ArrayList<>();
+
+                    String dateTime = String.format("%s %s",dateActivity, timeActivity);
+
                     indvActivity.add(titleActivity);
-                    indvActivity.add(dateActivity);
-                    indvActivity.add(timeActivity);
+                    indvActivity.add(dateTime);
                     activityList.add(indvActivity);
 
+
+
+
+
                 }
-                System.out.println(activityList);
-//                Toast.makeText(getApplicationContext(), "History Loaded", Toast.LENGTH_LONG).show();
+
+                // Sort by datetime string
+                Collections.sort(activityList, new Comparator<List<String>>() {
+                            @Override
+                            public int compare(List<String> o1, List<String> o2) {
+                                return (o1.get(1)).compareTo((o2.get(1)));
+                            }
+                        });
+
+                // Reverse the datetime list so that the most recent event shows first
+                Collections.reverse(activityList);
+
             }
 
             @Override

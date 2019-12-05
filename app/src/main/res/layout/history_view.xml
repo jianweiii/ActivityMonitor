@@ -30,10 +30,24 @@
 
         <TextView
             android:id="@+id/dateHistory"
-            android:padding="12dp"
+            android:paddingTop="12dp"
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp"
+            android:paddingBottom="5dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="19 January"
+            android:textSize="16sp"/>
+
+        <TextView
+            android:id="@+id/timeHistory"
+            android:paddingTop="5dp"
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp"
+            android:paddingBottom="12dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="22:11"
             android:textSize="16sp"/>
 
         <View
@@ -44,11 +58,10 @@
             android:layout_marginRight="12dp"/>
 
         <TextView
-            android:id="@+id/timeHistory"
+            android:id="@+id/noteHistory"
             android:padding="12dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="22:11"
             android:textSize="16sp"/>
 
     </LinearLayout>

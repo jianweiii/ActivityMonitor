@@ -70,7 +70,13 @@ public class AddActivity extends AppCompatActivity {
                         new DatePickerDialog.OnDateSetListener() {
                             @Override
                             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                                dateAddActivityEdit.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
+                                if (String.valueOf(dayOfMonth).length() == 1 ) {
+                                    String dayOfMonthStr = String.format("0%d",dayOfMonth);
+                                    dateAddActivityEdit.setText(dayOfMonthStr + "/" + (monthOfYear + 1) + "/" + year);
+                                } else {
+                                    dateAddActivityEdit.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
+                                }
+
                             }
                         }, year, month, day);
                 picker.show();
@@ -92,7 +98,23 @@ public class AddActivity extends AppCompatActivity {
                         new TimePickerDialog.OnTimeSetListener() {
                             @Override
                             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                                timeAddActivityEdit.setText(hourOfDay + ":" + minute);
+                                if (String.valueOf(hourOfDay).length() == 1) {
+                                    String hourOfDayStr = String.format("0%d",hourOfDay);
+                                    if (String.valueOf(minute).length() == 1) {
+                                        String minuteStr = String.format("0%d",minute);
+                                        timeAddActivityEdit.setText(hourOfDayStr + ":" + minuteStr);
+                                    } else {
+                                        timeAddActivityEdit.setText(hourOfDayStr + ":" + minute);
+                                    }
+                                } else {
+                                    if (String.valueOf(minute).length() == 1) {
+                                        String minuteStr = String.format("0%d", minute);
+                                        timeAddActivityEdit.setText(hourOfDay + ":" + minuteStr);
+                                    } else {
+                                        timeAddActivityEdit.setText(hourOfDay + ":" + minute);
+                                    }
+                                }
+
                             }
                         }, mHour, mMinute, false);
                 timePickerDialog.show();
