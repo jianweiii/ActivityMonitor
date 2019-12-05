@@ -72,9 +72,19 @@ public class AddActivity extends AppCompatActivity {
                             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                                 if (String.valueOf(dayOfMonth).length() == 1 ) {
                                     String dayOfMonthStr = String.format("0%d",dayOfMonth);
-                                    dateAddActivityEdit.setText(dayOfMonthStr + "/" + (monthOfYear + 1) + "/" + year);
+                                    if (String.valueOf(monthOfYear+1).length() == 1) {
+                                        String monthOfYearStr = String.format("0%d",(monthOfYear+1));
+                                        dateAddActivityEdit.setText(dayOfMonthStr + "/" + monthOfYearStr + "/" + year);
+                                    } else {
+                                        dateAddActivityEdit.setText(dayOfMonthStr + "/" + (monthOfYear + 1) + "/" + year);
+                                    }
                                 } else {
-                                    dateAddActivityEdit.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
+                                    if (String.valueOf(monthOfYear+1).length() == 1) {
+                                        String monthOfYearStr = String.format("0%d",(monthOfYear+1));
+                                        dateAddActivityEdit.setText(dayOfMonth + "/" + monthOfYearStr + "/" + year);
+                                    } else {
+                                        dateAddActivityEdit.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
+                                    }
                                 }
 
                             }

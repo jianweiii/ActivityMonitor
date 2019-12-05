@@ -20,12 +20,14 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -33,11 +35,16 @@ public class MainActivity extends AppCompatActivity {
     private Button logOutButton,historyViewer,addActivityButton;
     private TextView displayUsernameMain;
     private LinearLayout historyActivity;
+    private TextView todayActivityLeft, upcomingActivityLeft, historyActivityLeft;
 
     FirebaseAuth firebaseAuth;
     private FirebaseAuth.AuthStateListener  authStateListener;
 
-    ArrayList<List<String>> activityList = new ArrayList<>();
+    ArrayList<List<String>> todayActivityList = new ArrayList<>();
+    ArrayList<List<String>> upcomingActivityList = new ArrayList<>();
+    ArrayList<List<String>> historyActivityList = new ArrayList<>();
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +56,10 @@ public class MainActivity extends AppCompatActivity {
         displayUsernameMain = findViewById(R.id.displayUsernameMain);
         addActivityButton = findViewById(R.id.addActivityButton);
         historyActivity = findViewById(R.id.historyActivity);
+
+        todayActivityLeft = findViewById(R.id.todayActivityLeft);
+        upcomingActivityLeft = findViewById(R.id.upcomingActivityLeft);
+        historyActivityLeft = findViewById(R.id.historyActivityLeft);
 
         firebaseAuth = FirebaseAuth.getInstance();
 
@@ -78,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(),HistoryActivity.class);
-                intent.putExtra("activityList", activityList);
+                intent.putExtra("activityList", historyActivityList);
                 startActivity(intent);
 
             }
@@ -88,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(),HistoryActivity.class);
-                intent.putExtra("activityList", activityList);
+                intent.putExtra("activityList", historyActivityList);
                 startActivity(intent);
             }
         });
@@ -110,9 +121,18 @@ public class MainActivity extends AppCompatActivity {
 
         Log.i("MAIN", "On start called");
 
+        final LocalDate currentDate = LocalDate.now();
+        DateTimeFormatter currentDateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+        Log.i("CURRENTDATE", currentDate.toString());
+
+        final String todayDate = currentDate.format(currentDateFormatter);
+
+        System.out.println(currentDate.format(currentDateFormatter));
+
+
 
         firebaseAuth.addAuthStateListener(authStateListener);
-
 
         final FirebaseUser user =  firebaseAuth.getCurrentUser();
         final String userId = user.getUid();
@@ -124,7 +144,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 // Clear list when activity starts to prevent duplicates
-                activityList.clear();
+                todayActivityList.clear();
+                upcomingActivityList.clear();
+                historyActivityList.clear();
 
                 for(DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
 
@@ -135,23 +157,54 @@ public class MainActivity extends AppCompatActivity {
                     // Get the time of each activity
                     String timeActivity = postSnapshot.child("Activity").child("time").getValue().toString();
 
-                    // Add activity to a list before adding it to array of list
-                    List<String> indvActivity = new ArrayList<>();
-
+                    // Saving dateTime format as "dd/MM/yyyy HH:mm"
                     String dateTime = String.format("%s %s",dateActivity, timeActivity);
 
-                    indvActivity.add(titleActivity);
-                    indvActivity.add(dateTime);
-                    activityList.add(indvActivity);
+                    // Add activity to a list before adding it to array of list
+                    List<String> todayDateActivity = new ArrayList<>();
+                    List<String> upcomingDateActivity = new ArrayList<>();
+                    List<String> historyDateActivity = new ArrayList<>();
+
+
+//                    DateTimeFormatter format = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+//                    LocalDate date1 = (LocalDate) format.parse(dateActivity);
+////                    System.out.println(date1);
+
+
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                    LocalDate dt = LocalDate.parse(dateActivity,formatter);
+
+                    System.out.println(dt);
+//
+//                    final LocalDate currentDate = LocalDate.now();
+//                    DateTimeFormatter currentDateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+//
+//                    Log.i("CURRENTDATE", currentDate.toString());
+//
+//                    final String todayDate = currentDate.format(currentDateFormatter);
 
 
 
+                    int comparator = currentDate.compareTo(dt);
 
+                    if (comparator > 0) {
+                        historyDateActivity.add(titleActivity);
+                        historyDateActivity.add(dateTime);
+                        historyActivityList.add(historyDateActivity);
+                    } else if (comparator < 0) {
+                        upcomingDateActivity.add(titleActivity);
+                        upcomingDateActivity.add(dateTime);
+                        upcomingActivityList.add(upcomingDateActivity);
+                    } else if (comparator == 0) {
+                        todayDateActivity.add(timeActivity);
+                        todayDateActivity.add(dateTime);
+                        todayActivityList.add(todayDateActivity);
+                    }
 
                 }
 
                 // Sort by datetime string
-                Collections.sort(activityList, new Comparator<List<String>>() {
+                Collections.sort(historyActivityList, new Comparator<List<String>>() {
                             @Override
                             public int compare(List<String> o1, List<String> o2) {
                                 return (o1.get(1)).compareTo((o2.get(1)));
@@ -159,7 +212,17 @@ public class MainActivity extends AppCompatActivity {
                         });
 
                 // Reverse the datetime list so that the most recent event shows first
-                Collections.reverse(activityList);
+                Collections.reverse(historyActivityList);
+
+
+                todayActivityLeft.setText(String.valueOf(todayActivityList.size()));
+                historyActivityLeft.setText(String.valueOf(historyActivityList.size()));
+                upcomingActivityLeft.setText(String.valueOf(upcomingActivityList.size()));
+
+
+                Log.i("todayActivity", todayActivityList.toString());
+                Log.i("historyActivity", historyActivityList.toString());
+                Log.i("upcomingActivity", upcomingActivityList.toString());
 
             }
 
