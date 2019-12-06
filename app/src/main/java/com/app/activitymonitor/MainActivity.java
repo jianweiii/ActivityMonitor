@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
 
     private Button logOutButton,historyViewer,addActivityButton;
     private TextView displayUsernameMain;
-    private LinearLayout historyActivity;
+    private LinearLayout historyActivity,todayActivity,upcomingActivity;
     private TextView todayActivityLeft, upcomingActivityLeft, historyActivityLeft;
 
     FirebaseAuth firebaseAuth;
@@ -56,6 +56,8 @@ public class MainActivity extends AppCompatActivity {
         displayUsernameMain = findViewById(R.id.displayUsernameMain);
         addActivityButton = findViewById(R.id.addActivityButton);
         historyActivity = findViewById(R.id.historyActivity);
+        todayActivity = findViewById(R.id.todayActivity);
+        upcomingActivity = findViewById(R.id.upcomingActivity);
 
         todayActivityLeft = findViewById(R.id.todayActivityLeft);
         upcomingActivityLeft = findViewById(R.id.upcomingActivityLeft);
@@ -85,13 +87,22 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        historyViewer.setOnClickListener(new View.OnClickListener() {
+        upcomingActivity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(),HistoryActivity.class);
-                intent.putExtra("activityList", historyActivityList);
+                intent.putExtra("upcomingActivityList", upcomingActivityList);
                 startActivity(intent);
 
+            }
+        });
+
+        todayActivity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(),HistoryActivity.class);
+                intent.putExtra("todayActivityList", todayActivityList);
+                startActivity(intent);
             }
         });
 
@@ -150,6 +161,8 @@ public class MainActivity extends AppCompatActivity {
 
                 for(DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
 
+                    // Get key name of each activity
+                    String keyActivity = postSnapshot.getKey();
                     // Get the title of each activity
                     String titleActivity = postSnapshot.child("Activity").child("title").getValue().toString();
                     // Get the date of each activity
@@ -165,23 +178,10 @@ public class MainActivity extends AppCompatActivity {
                     List<String> upcomingDateActivity = new ArrayList<>();
                     List<String> historyDateActivity = new ArrayList<>();
 
-
-//                    DateTimeFormatter format = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-//                    LocalDate date1 = (LocalDate) format.parse(dateActivity);
-////                    System.out.println(date1);
-
-
                     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
                     LocalDate dt = LocalDate.parse(dateActivity,formatter);
 
                     System.out.println(dt);
-//
-//                    final LocalDate currentDate = LocalDate.now();
-//                    DateTimeFormatter currentDateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-//
-//                    Log.i("CURRENTDATE", currentDate.toString());
-//
-//                    final String todayDate = currentDate.format(currentDateFormatter);
 
 
 
@@ -190,14 +190,17 @@ public class MainActivity extends AppCompatActivity {
                     if (comparator > 0) {
                         historyDateActivity.add(titleActivity);
                         historyDateActivity.add(dateTime);
+                        historyDateActivity.add(keyActivity);
                         historyActivityList.add(historyDateActivity);
                     } else if (comparator < 0) {
                         upcomingDateActivity.add(titleActivity);
                         upcomingDateActivity.add(dateTime);
+                        upcomingDateActivity.add(keyActivity);
                         upcomingActivityList.add(upcomingDateActivity);
                     } else if (comparator == 0) {
                         todayDateActivity.add(timeActivity);
                         todayDateActivity.add(dateTime);
+                        todayDateActivity.add(keyActivity);
                         todayActivityList.add(todayDateActivity);
                     }
 

@@ -28,8 +28,6 @@ public class HistoryActivity extends AppCompatActivity {
         historyRecycler.setLayoutManager(layoutManager);
 
         ArrayList<List<String>> activityList = (ArrayList<List<String>>) getIntent().getSerializableExtra("activityList");
-        Log.i("HA", activityList.toString());
-
 
         historyAdaptor = new HistoryRecyclerAdapter(activityList);
         historyRecycler.setAdapter(historyAdaptor);
