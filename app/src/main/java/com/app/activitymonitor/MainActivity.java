@@ -3,6 +3,7 @@ package com.app.activitymonitor;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -90,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
         upcomingActivity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(),HistoryActivity.class);
+                Intent intent = new Intent(getApplicationContext(),UpcomingActivity.class);
                 intent.putExtra("upcomingActivityList", upcomingActivityList);
                 startActivity(intent);
 
@@ -100,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
         todayActivity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(),HistoryActivity.class);
+                Intent intent = new Intent(getApplicationContext(),TodayActivity.class);
                 intent.putExtra("todayActivityList", todayActivityList);
                 startActivity(intent);
             }
@@ -198,7 +199,7 @@ public class MainActivity extends AppCompatActivity {
                         upcomingDateActivity.add(keyActivity);
                         upcomingActivityList.add(upcomingDateActivity);
                     } else if (comparator == 0) {
-                        todayDateActivity.add(timeActivity);
+                        todayDateActivity.add(titleActivity);
                         todayDateActivity.add(dateTime);
                         todayDateActivity.add(keyActivity);
                         todayActivityList.add(todayDateActivity);
@@ -208,11 +209,34 @@ public class MainActivity extends AppCompatActivity {
 
                 // Sort by datetime string
                 Collections.sort(historyActivityList, new Comparator<List<String>>() {
-                            @Override
-                            public int compare(List<String> o1, List<String> o2) {
-                                return (o1.get(1)).compareTo((o2.get(1)));
-                            }
-                        });
+                    @Override
+                    public int compare(List<String> o1, List<String> o2) {
+                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+                        LocalDateTime ldt1 = LocalDateTime.parse(o1.get(1),formatter);
+                        LocalDateTime ldt2 = LocalDateTime.parse(o2.get(1),formatter);
+                        return (ldt1).compareTo(ldt2);
+                    }
+                });
+
+                Collections.sort(todayActivityList, new Comparator<List<String>>() {
+                    @Override
+                    public int compare(List<String> o1, List<String> o2) {
+                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+                        LocalDateTime ldt1 = LocalDateTime.parse(o1.get(1),formatter);
+                        LocalDateTime ldt2 = LocalDateTime.parse(o2.get(1),formatter);
+                        return (ldt1).compareTo(ldt2);
+                    }
+                });
+
+                Collections.sort(upcomingActivityList, new Comparator<List<String>>() {
+                    @Override
+                    public int compare(List<String> o1, List<String> o2) {
+                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+                        LocalDateTime ldt1 = LocalDateTime.parse(o1.get(1),formatter);
+                        LocalDateTime ldt2 = LocalDateTime.parse(o2.get(1),formatter);
+                        return (ldt1).compareTo(ldt2);
+                    }
+                });
 
                 // Reverse the datetime list so that the most recent event shows first
                 Collections.reverse(historyActivityList);

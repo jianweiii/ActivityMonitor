@@ -4,4 +4,7 @@
     <string name="upcoming">Upcoming</string>
     <string name="today">Today</string>
     <string name="history">History</string>
+    <string name="cancel">Cancel</string>
+    <string name="new_activity">New Activity</string>
+    <string name="add">Add</string>
 </resources>

@@ -24,17 +24,17 @@
                 android:id="@+id/cancelAddActivityButton"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="Cancel"
+                android:text="@string/cancel"
                 android:layout_weight="0.25"
                 android:background="@android:color/transparent"/>
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="New Activity"
+                android:text="@string/new_activity"
                 android:layout_weight="0.5"
                 android:textAlignment="center"
-                android:textSize="22dp"
+                android:textSize="22sp"
                 android:textStyle="bold"
                 android:layout_marginTop="2dp"/>
 
@@ -42,7 +42,7 @@
                 android:id="@+id/addAddActivityButton"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="Add"
+                android:text="@string/add"
                 android:layout_weight="0.25"
                 android:textAlignment="center"
                 android:background="@android:color/transparent"/>
@@ -61,7 +61,7 @@
                 android:layout_height="wrap_content"
                 android:hint="Title"
                 android:paddingLeft="20dp"
-                android:paddingRight="20dp"/>
+                android:paddingRight="20dp" />
 
             <EditText
                 android:id="@+id/dateAddActivityEdit"
@@ -77,9 +77,20 @@
                 android:layout_height="wrap_content"
                 android:hint="Time"
                 android:paddingLeft="20dp"
-                android:paddingRight="20dp"/>
+                android:paddingRight="20dp" />
 
         </LinearLayout>
+
+        <Switch
+            android:id="@+id/switchNotification"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Add notification and alarm:"
+            android:background="@android:color/white"
+            android:layout_marginTop="20dp"
+            android:padding="20dp"
+            android:textSize="16sp"
+            android:switchMinWidth="50dp" />
     </LinearLayout>
 
 

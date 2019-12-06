@@ -2,15 +2,24 @@ package com.app.activitymonitor;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
 
+import android.app.AlarmManager;
 import android.app.DatePickerDialog;
+import android.app.Notification;
+import android.app.PendingIntent;
 import android.app.TimePickerDialog;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.text.InputType;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
@@ -22,11 +31,17 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
 public class AddActivity extends AppCompatActivity {
+    public static final String NOTIFICATION_CHANNEL_ID = "10001" ;
+    private final static String default_notification_channel_id = "default" ;
 
     private Button cancelAddActivityButton;
     private Button addAddActivityButton;
@@ -35,10 +50,14 @@ public class AddActivity extends AppCompatActivity {
     private EditText dateAddActivityEdit;
     private EditText timeAddActivityEdit;
 
+    private Switch switchNotification;
+
     private DatePickerDialog picker;
     private TimePickerDialog timePickerDialog;
 
     FirebaseAuth firebaseAuth;
+
+    private String notificationFlag;
 
 
     @Override
@@ -52,6 +71,8 @@ public class AddActivity extends AppCompatActivity {
         titleAddActivityEdit = findViewById(R.id.titleAddActivityEdit);
         dateAddActivityEdit = findViewById(R.id.dateAddActivityEdit);
         timeAddActivityEdit = findViewById(R.id.timeAddActivityEdit);
+
+        switchNotification = findViewById(R.id.switchNotification);
 
         final HashMap<String, HashMap<String, String>> hashMap = new HashMap<>();
 
@@ -139,6 +160,27 @@ public class AddActivity extends AppCompatActivity {
             }
         });
 
+        switchNotification.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    notificationFlag = "TRUE";
+                    String dateTime = String.format("%s %s",dateAddActivityEdit.getText(),timeAddActivityEdit.getText());
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+                    LocalDateTime ldt = LocalDateTime.parse(dateTime,formatter);
+                    ZonedDateTime zdt = ldt.atZone(ZoneId.of("Singapore"));
+                    long ms = zdt.toInstant().toEpochMilli();
+                    System.out.println(ms);
+
+                    System.out.println(System.currentTimeMillis());
+                    long delay = (ms - System.currentTimeMillis());
+                    System.out.println(delay);
+                } else {
+                    notificationFlag = "FALSE";
+                }
+            }
+        });
+
         addAddActivityButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -163,15 +205,47 @@ public class AddActivity extends AppCompatActivity {
 
                     }
                 });
-//                DatabaseReference mRef =  database.getReference().child("Users").child(userId);
-//                System.out.println(mRef);
-//                mRef.child("age").setValue(1);
-//                mRef.child("gender").setValue(finalGender);
-//                mRef.child("username").setValue(username);
+
+                String dateTime = String.format("%s %s",dateAddActivityEdit.getText(),timeAddActivityEdit.getText());
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+                LocalDateTime ldt = LocalDateTime.parse(dateTime,formatter);
+                ZonedDateTime zdt = ldt.atZone(ZoneId.of("Singapore"));
+                long ms = zdt.toInstant().toEpochMilli();
+                System.out.println(ms);
+
+                System.out.println(System.currentTimeMillis());
+                long delay = (ms - System.currentTimeMillis());
+
+                if (notificationFlag == "TRUE" && delay > 0) {
+                    scheduleNotification(getNotification(titleAddActivityEdit.getText().toString()), delay );
+                }
+
+
 
                 finish();
             }
         });
 
+    }
+
+    private void scheduleNotification (Notification notification , long delay) {
+        Intent notificationIntent = new Intent( this, ReminderReceiver.class);
+        notificationIntent.putExtra(ReminderReceiver.NOTIFICATION_ID , 1 );
+        notificationIntent.putExtra(ReminderReceiver.NOTIFICATION , notification);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast ( this, 0 , notificationIntent , PendingIntent. FLAG_UPDATE_CURRENT );
+        long futureInMillis = SystemClock.elapsedRealtime() + delay ;
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE );
+        assert alarmManager != null;
+        //TODO: check if i can just use ms to pass in as parameter
+        alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP , futureInMillis , pendingIntent);
+    }
+    private Notification getNotification (String content) {
+        NotificationCompat.Builder builder = new NotificationCompat.Builder( this, default_notification_channel_id );
+        builder.setContentTitle("Scheduled Activity Reminder");
+        builder.setContentText(content);
+        builder.setSmallIcon(R.drawable.ic_launcher_foreground);
+        builder.setAutoCancel(true);
+        builder.setChannelId(NOTIFICATION_CHANNEL_ID);
+        return builder.build();
     }
 }
