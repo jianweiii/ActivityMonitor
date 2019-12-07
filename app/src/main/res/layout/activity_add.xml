@@ -6,19 +6,17 @@
     android:layout_height="match_parent"
     tools:context=".AddActivity"
     android:orientation="vertical"
-    android:background="#424141"
-    android:padding="8dp">
+    android:background="@drawable/gradient"
+    android:padding="12dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:background="@android:color/darker_gray">
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@android:color/white">
+            android:layout_height="wrap_content">
 
             <Button
                 android:id="@+id/cancelAddActivityButton"
@@ -26,7 +24,8 @@
                 android:layout_height="wrap_content"
                 android:text="@string/cancel"
                 android:layout_weight="0.25"
-                android:background="@android:color/transparent"/>
+                android:background="@android:color/transparent"
+                android:textColor="@android:color/white"/>
 
             <TextView
                 android:layout_width="0dp"
@@ -36,6 +35,7 @@
                 android:textAlignment="center"
                 android:textSize="22sp"
                 android:textStyle="bold"
+                android:textColor="@android:color/white"
                 android:layout_marginTop="2dp"/>
 
             <Button
@@ -45,7 +45,8 @@
                 android:text="@string/add"
                 android:layout_weight="0.25"
                 android:textAlignment="center"
-                android:background="@android:color/transparent"/>
+                android:background="@android:color/transparent"
+                android:textColor="@android:color/white"/>
         </LinearLayout>
 
         <LinearLayout
@@ -53,7 +54,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:background="@android:color/white">
+            android:background="@android:color/white"
+            android:padding="10dp">
 
             <EditText
                 android:id="@+id/titleAddActivityEdit"

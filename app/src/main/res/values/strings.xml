@@ -7,4 +7,13 @@
     <string name="cancel">Cancel</string>
     <string name="new_activity">New Activity</string>
     <string name="add">Add</string>
+    <string name="activity_filler">0</string>
+    <string name="emailLogin">Email</string>
+    <string name="passwordLogin">Password</string>
+    <string name="welcomeLogin">Welcome</string>
+    <string name="loginButton">Login</string>
+    <string name="register_button">Register</string>
+    <string name="member_button">Member</string>
+    <string name="log_out">Log out</string>
+    <string name="add_activity">Add Activity</string>
 </resources>

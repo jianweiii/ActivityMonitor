@@ -19,7 +19,7 @@ import com.google.firebase.auth.FirebaseAuth;
 public class LoginActivity extends AppCompatActivity {
 
     EditText loginEmail,loginPassword;
-    Button loginButton,registerButton,newPassButton;
+    Button loginButton,registerButton;
     FirebaseAuth firebaseAuth;
 
 
@@ -32,7 +32,6 @@ public class LoginActivity extends AppCompatActivity {
         loginPassword = findViewById(R.id.loginPasswordInputId);
         loginButton = findViewById(R.id.loginLoginButtonId);
         registerButton = findViewById(R.id.loginRegisterButtonId);
-        newPassButton = findViewById(R.id.forgotPassButton);
 
         firebaseAuth = FirebaseAuth.getInstance();
 

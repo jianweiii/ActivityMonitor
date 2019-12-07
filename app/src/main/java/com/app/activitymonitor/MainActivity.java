@@ -33,7 +33,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Button logOutButton,historyViewer,addActivityButton;
+    private Button logOutButton,addActivityButton;
     private TextView displayUsernameMain;
     private LinearLayout historyActivity,todayActivity,upcomingActivity;
     private TextView todayActivityLeft, upcomingActivityLeft, historyActivityLeft;
@@ -53,7 +53,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         logOutButton = findViewById(R.id.mainLogoutButtonId);
-        historyViewer = findViewById(R.id.historyViewer);
         displayUsernameMain = findViewById(R.id.displayUsernameMain);
         addActivityButton = findViewById(R.id.addActivityButton);
         historyActivity = findViewById(R.id.historyActivity);
@@ -66,6 +65,8 @@ public class MainActivity extends AppCompatActivity {
 
         firebaseAuth = FirebaseAuth.getInstance();
 
+        // Check if there is a current user
+        // Else, go to log in page
         authStateListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
@@ -79,6 +80,7 @@ public class MainActivity extends AppCompatActivity {
             }
         };
 
+        // Log out of current user and go to log in page
         logOutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -88,6 +90,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        // On click, send user to upcoming activity
         upcomingActivity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -98,6 +101,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        // On click, send user to today activity
         todayActivity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -107,6 +111,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        // On click, send user to history activity
         historyActivity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -116,6 +121,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        // On click, send user to add activity activity
         addActivityButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -134,13 +140,11 @@ public class MainActivity extends AppCompatActivity {
         Log.i("MAIN", "On start called");
 
         final LocalDate currentDate = LocalDate.now();
-        DateTimeFormatter currentDateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+//        DateTimeFormatter currentDateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+//
+//
+//        final String todayDate = currentDate.format(currentDateFormatter);
 
-        Log.i("CURRENTDATE", currentDate.toString());
-
-        final String todayDate = currentDate.format(currentDateFormatter);
-
-        System.out.println(currentDate.format(currentDateFormatter));
 
 
 
@@ -182,10 +186,9 @@ public class MainActivity extends AppCompatActivity {
                     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
                     LocalDate dt = LocalDate.parse(dateActivity,formatter);
 
-                    System.out.println(dt);
 
 
-
+                    // Comaparing current date with activity date
                     int comparator = currentDate.compareTo(dt);
 
                     if (comparator > 0) {
@@ -241,7 +244,7 @@ public class MainActivity extends AppCompatActivity {
                 // Reverse the datetime list so that the most recent event shows first
                 Collections.reverse(historyActivityList);
 
-
+                // Set text based on how many activities in each list
                 todayActivityLeft.setText(String.valueOf(todayActivityList.size()));
                 historyActivityLeft.setText(String.valueOf(historyActivityList.size()));
                 upcomingActivityLeft.setText(String.valueOf(upcomingActivityList.size()));

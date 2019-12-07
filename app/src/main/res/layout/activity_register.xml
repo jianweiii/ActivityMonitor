@@ -6,14 +6,9 @@
     android:layout_height="match_parent"
     tools:context=".RegisterActivity"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:padding="16dp"
+    android:background="@drawable/gradient">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textAlignment="center"
-        android:textSize="30dp"
-        android:text="Welcome"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -21,72 +16,104 @@
         android:gravity="center"
         android:orientation="vertical">
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:textSize="30sp"
+            android:text="@string/welcomeLogin"
+            android:layout_marginBottom="40dp"
+            android:textColor="@android:color/white"/>
+
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_marginBottom="10dp">
 
-            <TextView
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:text="Username:"
-                android:textSize="20dp"
-                android:textAlignment="textEnd"/>
             <EditText
                 android:id="@+id/usernameInputId"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:singleLine="true"/>
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="40dp"
+                android:padding="10dp"
+                android:singleLine="true"
+                android:hint="Username"
+                android:textColorHint="@color/text_hints"
+                android:textColor="@android:color/white"
+                android:inputType="textPersonName"
+                android:background="#11000000"
+                android:drawableLeft="@drawable/ic_android"
+                android:drawablePadding="8dp"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_marginBottom="10dp">
 
-            <TextView
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:text="Email:"
-                android:textSize="20dp"
-                android:textAlignment="textEnd"/>
             <EditText
                 android:id="@+id/emailInputId"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:singleLine="true"/>
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="40dp"
+                android:padding="10dp"
+                android:singleLine="true"
+                android:hint="Email"
+                android:textColorHint="@color/text_hints"
+                android:textColor="@android:color/white"
+                android:inputType="textEmailAddress"
+                android:background="#11000000"
+                android:drawableLeft="@drawable/ic_envelope"
+                android:drawablePadding="8dp"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:text="Password:"
-                android:textSize="20dp"
-                android:textAlignment="textEnd"/>
 
             <EditText
                 android:id="@+id/passwordInputId"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="40dp"
+                android:padding="10dp"
                 android:singleLine="true"
-                android:text=""/>
+                android:text=""
+                android:hint="Password"
+                android:textColorHint="@color/text_hints"
+                android:textColor="@android:color/white"
+                android:inputType="textPassword"
+                android:background="#11000000"
+                android:drawableLeft="@drawable/ic_lock"
+                android:drawablePadding="8dp"/>
 
         </LinearLayout>
 
         <Button
+            android:layout_marginTop="40dp"
             android:id="@+id/registerButtonId"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Register"/>
+            android:text="@string/register_button"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            android:elevation="5dp"
+            android:translationZ="3dp"
+            android:background="@drawable/login_buttons"/>
 
         <Button
             android:id="@+id/loginButtonId"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Already a member?" />
+            android:layout_marginTop="20dp"
+            android:text="@string/member_button"
+            android:background="@android:color/transparent"
+            android:textColor="@android:color/white"/>
 
 
     </LinearLayout>

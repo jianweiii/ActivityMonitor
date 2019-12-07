@@ -243,7 +243,7 @@ public class AddActivity extends AppCompatActivity {
         NotificationCompat.Builder builder = new NotificationCompat.Builder( this, default_notification_channel_id );
         builder.setContentTitle("Scheduled Activity Reminder");
         builder.setContentText(content);
-        builder.setSmallIcon(R.drawable.ic_launcher_foreground);
+        builder.setSmallIcon(R.drawable.ic_iconfinder_calendar_285670);
         builder.setAutoCancel(true);
         builder.setChannelId(NOTIFICATION_CHANNEL_ID);
         return builder.build();
