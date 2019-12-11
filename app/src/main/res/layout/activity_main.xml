@@ -7,7 +7,7 @@
     tools:context=".MainActivity"
     android:padding="12dp"
     android:orientation="vertical"
-    android:background="#151515">
+    android:id="@+id/layoutBackground">
 
     <TextView
         android:id="@+id/displayUsernameMain"
@@ -145,19 +145,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/add_activity"
+                android:layout_marginBottom="40dp"
                 android:elevation="5dp"
                 android:translationZ="3dp"
                 android:textSize="20sp"
                 android:textColor="@android:color/white"
                 android:background="@drawable/add_activity"/>
-            <Button
-                android:id="@+id/mainLogoutButtonId"
-                android:text="@string/log_out"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:textColor="@android:color/white"
-                android:background="@android:color/transparent"/>
         </LinearLayout>
 
     </LinearLayout>

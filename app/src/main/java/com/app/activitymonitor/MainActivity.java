@@ -2,11 +2,16 @@ package com.app.activitymonitor;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -33,9 +38,9 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Button logOutButton,addActivityButton;
+    private Button addActivityButton;
     private TextView displayUsernameMain;
-    private LinearLayout historyActivity,todayActivity,upcomingActivity;
+    private LinearLayout historyActivity,todayActivity,upcomingActivity, layoutBackground;
     private TextView todayActivityLeft, upcomingActivityLeft, historyActivityLeft;
 
     FirebaseAuth firebaseAuth;
@@ -45,14 +50,13 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<List<String>> upcomingActivityList = new ArrayList<>();
     ArrayList<List<String>> historyActivityList = new ArrayList<>();
 
-
+    SharedPreferences preferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        logOutButton = findViewById(R.id.mainLogoutButtonId);
         displayUsernameMain = findViewById(R.id.displayUsernameMain);
         addActivityButton = findViewById(R.id.addActivityButton);
         historyActivity = findViewById(R.id.historyActivity);
@@ -62,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
         todayActivityLeft = findViewById(R.id.todayActivityLeft);
         upcomingActivityLeft = findViewById(R.id.upcomingActivityLeft);
         historyActivityLeft = findViewById(R.id.historyActivityLeft);
+        layoutBackground = findViewById(R.id.layoutBackground);
 
         firebaseAuth = FirebaseAuth.getInstance();
 
@@ -79,16 +84,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         };
-
-        // Log out of current user and go to log in page
-        logOutButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                firebaseAuth.signOut();
-                startActivity(new Intent(getApplicationContext(),LoginActivity.class));
-                finish();
-            }
-        });
 
         // On click, send user to upcoming activity
         upcomingActivity.setOnClickListener(new View.OnClickListener() {
@@ -140,13 +135,13 @@ public class MainActivity extends AppCompatActivity {
         Log.i("MAIN", "On start called");
 
         final LocalDate currentDate = LocalDate.now();
-//        DateTimeFormatter currentDateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-//
-//
-//        final String todayDate = currentDate.format(currentDateFormatter);
 
+        preferences = getSharedPreferences("color", MODE_PRIVATE);
+        String bgdColor = preferences.getString("background_color", getString(R.string.black));
+        String txtColor = preferences.getString("text_color", getString(R.string.white));
 
-
+        layoutBackground.setBackgroundColor(Color.parseColor(bgdColor));
+        displayUsernameMain.setTextColor(Color.parseColor(txtColor));
 
         firebaseAuth.addAuthStateListener(authStateListener);
 
@@ -271,4 +266,26 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.settings, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.action_settings:
+                Intent intent = new Intent(this, Settings.class);
+                startActivity(intent);
+                return true;
+            case R.id.action_logout:
+                firebaseAuth.signOut();
+                startActivity(new Intent(getApplicationContext(),LoginActivity.class));
+                finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }

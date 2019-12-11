@@ -11,7 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".TodayActivity"></activity>
+        <activity android:name=".Settings"></activity>
+        <activity android:name=".TodayActivity" />
         <activity android:name=".UpcomingActivity" />
         <activity android:name=".AddActivity" />
         <activity android:name=".HistoryActivity" />
@@ -28,8 +29,7 @@
         <receiver
             android:name=".ReminderReceiver"
             android:enabled="true"
-            android:exported="false" >
-        </receiver>
+            android:exported="false"></receiver>
     </application>
 
 </manifest>

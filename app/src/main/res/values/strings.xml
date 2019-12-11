@@ -16,4 +16,12 @@
     <string name="member_button">Member</string>
     <string name="log_out">Log out</string>
     <string name="add_activity">Add Activity</string>
+    <string name="white">#FFFFFF</string>
+    <string name="black">#000000</string>
+    <string name="number_of_times">Number of times:</string>
+    <string name="monthly">Monthly</string>
+    <string name="weekly">Weekly</string>
+    <string name="daily">Daily</string>
+    <string name="repeat_activity">Repeat Activity:</string>
+    <string name="add_notification_and_alarm">Add notification and alarm:</string>
 </resources>

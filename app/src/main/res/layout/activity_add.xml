@@ -6,8 +6,8 @@
     android:layout_height="match_parent"
     tools:context=".AddActivity"
     android:orientation="vertical"
-    android:background="@drawable/gradient"
-    android:padding="12dp">
+    android:padding="12dp"
+    android:id="@+id/layoutBackground">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -28,6 +28,7 @@
                 android:textColor="@android:color/white"/>
 
             <TextView
+                android:id="@+id/newAddActivityTitle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="@string/new_activity"
@@ -63,7 +64,8 @@
                 android:layout_height="wrap_content"
                 android:hint="Title"
                 android:paddingLeft="20dp"
-                android:paddingRight="20dp" />
+                android:paddingRight="20dp"
+                android:text="Haircut"/>
 
             <EditText
                 android:id="@+id/dateAddActivityEdit"
@@ -71,7 +73,8 @@
                 android:layout_height="wrap_content"
                 android:hint="Date"
                 android:paddingLeft="20dp"
-                android:paddingRight="20dp"/>
+                android:paddingRight="20dp"
+                android:text="24/12/2019"/>
 
             <EditText
                 android:id="@+id/timeAddActivityEdit"
@@ -79,7 +82,9 @@
                 android:layout_height="wrap_content"
                 android:hint="Time"
                 android:paddingLeft="20dp"
-                android:paddingRight="20dp" />
+                android:paddingRight="20dp"
+                android:text="22:12"/>
+
 
         </LinearLayout>
 
@@ -87,12 +92,88 @@
             android:id="@+id/switchNotification"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Add notification and alarm:"
+            android:text="@string/add_notification_and_alarm"
             android:background="@android:color/white"
             android:layout_marginTop="20dp"
             android:padding="20dp"
             android:textSize="16sp"
             android:switchMinWidth="50dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@color/colorTextWhite"
+            android:layout_marginTop="5dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="20dp"
+                android:textSize="16sp"
+                android:textColor="@color/colorTextBlack"
+                android:text="@string/repeat_activity"/>
+
+            <RadioGroup
+                android:id="@+id/repeatRadioGrp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="0.9"
+                android:layout_marginLeft="25dp"
+                android:layout_marginRight="25dp"
+                android:paddingBottom="5dp">
+
+                <RadioButton
+                    android:id="@+id/repeatDaily"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.3"
+                    android:text="@string/daily"/>
+
+                <RadioButton
+                    android:id="@+id/repeatWeekly"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.3"
+                    android:text="@string/weekly"/>
+
+                <RadioButton
+                    android:id="@+id/repeatMonthly"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.3"
+                    android:text="@string/monthly"/>
+            </RadioGroup>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.4"
+                    android:text="@string/number_of_times"
+                    android:textAlignment="textEnd"
+                    android:layout_marginEnd="10dp"/>
+
+                <EditText
+                    android:id="@+id/numberOfReps"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.7"
+                    android:layout_marginEnd="25dp"
+                    android:inputType="number"
+                    android:text="0"
+                    android:textAlignment="center"/>
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
     </LinearLayout>
 
 
