@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -26,6 +27,9 @@ public class HistoryActivity extends AppCompatActivity {
     private RecyclerView historyRecycler;
     private RecyclerView.LayoutManager layoutManager;
     private RecyclerView.Adapter historyAdaptor;
+    private SharedPreferences preferences;
+
+    LinearLayout layoutBackground;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +37,16 @@ public class HistoryActivity extends AppCompatActivity {
         setContentView(R.layout.activity_history);
 
         historyRecycler = findViewById(R.id.historyRecycler);
+        layoutBackground = findViewById(R.id.layoutBackground);
+
+        preferences = getSharedPreferences("color", MODE_PRIVATE);
+        String bgdColor = preferences.getString("background_color", getString(R.string.black));
+
+        if (bgdColor.equals("#000000")) {
+            layoutBackground.setBackgroundResource(R.drawable.gradient);
+        } else {
+            layoutBackground.setBackgroundColor(Color.parseColor(bgdColor));
+        }
 
         layoutManager = new LinearLayoutManager(this);
         historyRecycler.setLayoutManager(layoutManager);

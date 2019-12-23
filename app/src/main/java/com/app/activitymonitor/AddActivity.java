@@ -65,7 +65,7 @@ public class AddActivity extends AppCompatActivity {
     private Switch switchNotification;
     private RadioGroup repeatRadioGrp;
     private RadioButton repeatDaily, repeatWeekly, repeatMonthly;
-    private String counter_repeat;
+    private String counter_repeat = "nil";
     private int userInputRepeat = 0;
 
     private DatePickerDialog picker;

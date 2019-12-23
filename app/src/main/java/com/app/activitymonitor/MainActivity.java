@@ -150,7 +150,6 @@ public class MainActivity extends AppCompatActivity {
         final DatabaseReference mRef =  FirebaseDatabase.getInstance().getReference().child("Users").child(userId);
 
 
-
         mRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

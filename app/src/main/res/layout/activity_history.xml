@@ -6,7 +6,8 @@
     android:layout_height="match_parent"
     tools:context=".HistoryActivity"
     android:orientation="vertical"
-    android:background="@drawable/gradient">
+    android:background="@drawable/gradient"
+    android:id="@+id/layoutBackground">
 
 
 

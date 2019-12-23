@@ -4,12 +4,16 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -24,6 +28,9 @@ public class RegisterActivity extends AppCompatActivity {
     EditText emailInput,passwordInput,usernameInput;
     Button registerButton,loginButton;
     FirebaseAuth firebaseAuth;
+    SharedPreferences preferences;
+    LinearLayout layoutBackground;
+    TextView welcomeText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +42,26 @@ public class RegisterActivity extends AppCompatActivity {
         registerButton = (Button) findViewById(R.id.registerButtonId);
         loginButton = (Button) findViewById(R.id.loginButtonId);
         usernameInput = findViewById(R.id.usernameInputId);
+        welcomeText = findViewById(R.id.welcomeText);
+        layoutBackground = findViewById(R.id.layoutBackground);
+
+        preferences = getSharedPreferences("color", MODE_PRIVATE);
+        String bgdColor = preferences.getString("background_color", getString(R.string.black));
+        String txtColor = preferences.getString("text_color", getString(R.string.white));
+
+        if (bgdColor.equals("#000000")) {
+            layoutBackground.setBackgroundResource(R.drawable.gradient);
+            usernameInput.setBackgroundColor(Color.parseColor("#11000000"));
+            emailInput.setBackgroundColor(Color.parseColor("#11000000"));
+            passwordInput.setBackgroundColor(Color.parseColor("#11000000"));
+        } else {
+            layoutBackground.setBackgroundColor(Color.parseColor(bgdColor));
+            usernameInput.setBackgroundColor(Color.parseColor(txtColor));
+            emailInput.setBackgroundColor(Color.parseColor(txtColor));
+            passwordInput.setBackgroundColor(Color.parseColor(txtColor));
+        }
+        welcomeText.setTextColor(Color.parseColor(txtColor));
+        loginButton.setTextColor(Color.parseColor(txtColor));
 
         firebaseAuth = FirebaseAuth.getInstance();
 

@@ -64,8 +64,7 @@
                 android:layout_height="wrap_content"
                 android:hint="Title"
                 android:paddingLeft="20dp"
-                android:paddingRight="20dp"
-                android:text="Haircut"/>
+                android:paddingRight="20dp" />
 
             <EditText
                 android:id="@+id/dateAddActivityEdit"
@@ -73,8 +72,7 @@
                 android:layout_height="wrap_content"
                 android:hint="Date"
                 android:paddingLeft="20dp"
-                android:paddingRight="20dp"
-                android:text="24/12/2019"/>
+                android:paddingRight="20dp" />
 
             <EditText
                 android:id="@+id/timeAddActivityEdit"
@@ -82,8 +80,7 @@
                 android:layout_height="wrap_content"
                 android:hint="Time"
                 android:paddingLeft="20dp"
-                android:paddingRight="20dp"
-                android:text="22:12"/>
+                android:paddingRight="20dp" />
 
 
         </LinearLayout>

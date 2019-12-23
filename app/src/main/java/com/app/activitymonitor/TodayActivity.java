@@ -7,9 +7,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.LinearLayout;
 
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -23,15 +25,24 @@ public class TodayActivity extends AppCompatActivity {
     private RecyclerView.Adapter todayAdaptor;
 
     SharedPreferences preferences;
+    LinearLayout layoutBackground;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_today);
 
-        preferences = getSharedPreferences("color", MODE_PRIVATE);
-
         todayRecycler = findViewById(R.id.todayRecycler);
+        layoutBackground = findViewById(R.id.layoutBackground);
+
+        preferences = getSharedPreferences("color", MODE_PRIVATE);
+        String bgdColor = preferences.getString("background_color", getString(R.string.black));
+
+        if (bgdColor.equals("#000000")) {
+            layoutBackground.setBackgroundResource(R.drawable.gradient);
+        } else {
+            layoutBackground.setBackgroundColor(Color.parseColor(bgdColor));
+        }
 
         layoutManager = new LinearLayoutManager(this);
         todayRecycler.setLayoutManager(layoutManager);
